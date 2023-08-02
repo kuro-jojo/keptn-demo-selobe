@@ -1,0 +1,30 @@
+Checklist 
+- create  python script that will send logs to splunk server
+    - the app will just send a log every x seconds : x will  define the frequency of the logs sent and the success of the evaluation
+    - each version of the app will have a different frequency
+
+- create a dockerfile of the python script
+- build and push an image to dockerhub
+- create a kubernetes deployment that will run the image
+- create a kubernetes service that will expose the deployment
+
+keptn add-resource --project=zero-app --service=zeroservice --stage=qa --resource=sli.yaml --resourceUri=splunk/sli.yaml
+keptn add-resource --project=zero-app --service=zeroservice --stage=production --resource=sli-prod.yaml --resourceUri=splunk/sli.yaml
+keptn add-resource --project=zero-app --service=zeroservice --all-stages --resource=zeroservice.tgz --resourceUri=charts/zeroservice.tgz
+keptn add-resource --project=zero-app --service=zeroservice --stage=qa --resource=config.yaml --resourceUri=job/config.yaml
+keptn add-resource --project=zero-app --service=zeroservice --stage=production --resource=config-prod.yaml --resourceUri=job/config.yaml
+keptn add-resource --project=zero-app --service=zeroservice --stage=qa --resource=slo.yaml --resourceUri=slo.yaml
+keptn add-resource --project=zero-app --service=zeroservice --stage=production --resource=slo-prod.yaml --resourceUri=slo.yaml
+keptn add-resource --project=zero-app --service=zeroservice --stage=production --resource=remediation.yaml --resourceUri=remediation.yaml
+
+
+less than 45 minutes
+- faire la ci/cd
+- 
+moins de texte
+evaluation keptn pour 1A :
+-  not study how , migration
+process de la contribution open source dans 1A 
+- les intervenants 
+- comment faire dans l'avenir si on veut contribuer
+- 

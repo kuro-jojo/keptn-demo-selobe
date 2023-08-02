@@ -1,0 +1,62 @@
+apiVersion: v2
+actions:
+  - name: "Deploy using helm"
+    events:
+      - name: "sh.keptn.event.deployment.triggered"
+    tasks:
+      - name: "Run helm"
+        files:
+          - /charts
+        env:
+          - name: IMAGE
+            value: "$.data.configurationChange.values.image"
+            valueFrom: event
+        image: "alpine/helm:3.7.2"
+        serviceAccount: "jes-deploy-using-helm"
+        cmd: 
+          - "helm"
+        args: 
+          - "upgrade"
+          - "--create-namespace"
+          - "--install"
+          - "-n"
+          - "$(KEPTN_PROJECT)-$(KEPTN_STAGE)"
+          - "$(KEPTN_SERVICE)"
+          - "/keptn/charts/$(KEPTN_SERVICE).tgz"
+          - "--set"
+          - "image=$(IMAGE)"
+          - "--set"
+          - "stage=prod"
+        ttlSecondsAfterFinished: 100
+
+
+  - name: "Fallback to previous version"
+    events:
+      - name: "sh.keptn.event.action.triggered"
+        jsonpath:
+          property: "$.data.action.action"
+          match: "fallback"
+    tasks:
+      - name: "Deploy using helm"
+        files:
+          - /charts
+        env:
+          - name: IMAGE
+            value: $.data.action.value.defaultApp
+            valueFrom: event
+        image: "alpine/helm:3.7.2"
+        serviceAccount: "jes-deploy-using-helm"
+        cmd: 
+          - "helm"
+        args: 
+          - "upgrade"
+          - "--create-namespace"
+          - "--install"
+          - "-n"
+          - "$(KEPTN_PROJECT)-$(KEPTN_STAGE)"
+          - "$(KEPTN_SERVICE)"
+          - "/keptn/charts/$(KEPTN_SERVICE).tgz"
+          - "--set"
+          - "image=$(IMAGE)"
+
+        ttlSecondsAfterFinished: 100
