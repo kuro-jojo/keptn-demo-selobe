@@ -24,7 +24,6 @@ spec:
               properties:
                 pass: "automatic"
                 warning: "manual"
-            - name: "test"
             - name: "deployment"
  
         - name: "remediation"

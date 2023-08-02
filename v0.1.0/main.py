@@ -50,7 +50,6 @@ def updateDate(log_line: str) -> str:
 
 
 if __name__ == "__main__":
-    
     load_dotenv()
     logging.basicConfig(level=logging.INFO)
 
@@ -58,13 +57,12 @@ if __name__ == "__main__":
     port = os.getenv("SPLUNK_HEC_PORT", 8088)
     token = os.getenv("SPLUNK_HEC_TOKEN")
     namespace = os.getenv("SPLUNK_HEC_NAMESPACE")
-    frequency = 30
+    frequency = 5
     stage = os.getenv("STAGE", "")
     error_msg = (
         "[Fri Jul 28 09:59:58 2023] [error] mod_jvk child workerEnv in error state 7"
     )
 
-    
     if not token:
         raise EnvironmentError("Please set the environment variables SPLUNK_HEC_TOKEN")
 
@@ -72,13 +70,16 @@ if __name__ == "__main__":
     if not sp.is_connected():
         print("Splunk HEC is not available")
         exit(1)
-    i = 0    
-    log(level=logging.INFO, msg=f"Sending logs to {sp.instance} each {frequency} seconds on http:zero-service{stage}")
+    i = 0
+    log(
+        level=logging.INFO,
+        msg=f"Sending logs to {sp.instance} each {frequency} seconds on http:zero-service{stage}",
+    )
     while True:
         error_msg = updateDate(error_msg)
         resp = sp.send(error_msg, f"http:zero-service{stage}")
         log(level=logging.INFO, msg=error_msg)
+        log(level=logging.INFO, msg=f"Error number: {i} sent on http:zero-service{stage}")
         log(level=logging.INFO, msg=f"Response: {resp.content}")
-        log(level=logging.DEBUG, msg=f"Error number: {i}")
-        i+=1
+        i += 1
         time.sleep(frequency)
