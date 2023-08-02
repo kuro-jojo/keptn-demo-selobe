@@ -1,2 +1,2 @@
-config*.yaml
-venv
+zezro-splunk-config.yaml
+venv/
