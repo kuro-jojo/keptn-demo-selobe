@@ -1,8 +1,0 @@
-PI review
-- team presentation : update
-- iteration goal & results
-EE 
-2 streams/teams : obe & platform'
-
-https://deployment-manager-api.gob.amadeus.net
-https://api.deployment-manager.global.amadeus.net
