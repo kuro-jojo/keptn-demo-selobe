@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: obe-releases-splunk-config
+  namespace: obe-releases-mig
+data:
+  SPLUNK_HEC_TOKEN: "3465c8fa-df38-415b-ada6-90f834ff8796"
+  SPLUNK_HEC_HOST: "172.29.226.241"
+  SPLUNK_HEC_PORT: "8088"

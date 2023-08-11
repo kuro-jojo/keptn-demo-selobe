@@ -11,14 +11,11 @@ actions:
           - name: IMAGE
             value: "$.data.configurationChange.values.image"
             valueFrom: event
-          - name: VERSION 
-            value: "$.data.configurationChange.values.version"
-            valueFrom: event
         image: "alpine/helm:3.7.2"
         serviceAccount: "jes-deploy-using-helm"
-        cmd: 
+        cmd:
           - "helm"
-        args: 
+        args:
           - "upgrade"
           - "--create-namespace"
           - "--install"
@@ -28,30 +25,29 @@ actions:
           - "/keptn/charts/$(KEPTN_SERVICE).tgz"
           - "--set"
           - "image=$(IMAGE)"
-          - "--version"
-          - "$(VERSION)"
+          - "--set"
+          - "stage=-prod"
         ttlSecondsAfterFinished: 100
-
 
   - name: "Fallback to previous version"
     events:
       - name: "sh.keptn.event.action.triggered"
         jsonpath:
           property: "$.data.action.action"
-          match: "fallback"
+          match: "rollback"
     tasks:
       - name: "Deploy using helm"
         files:
           - /charts
         env:
           - name: IMAGE
-            value: $.data.action.value.defaultApp
+            value: $.data.action.value.stableVersion
             valueFrom: event
         image: "alpine/helm:3.7.2"
         serviceAccount: "jes-deploy-using-helm"
-        cmd: 
+        cmd:
           - "helm"
-        args: 
+        args:
           - "upgrade"
           - "--create-namespace"
           - "--install"

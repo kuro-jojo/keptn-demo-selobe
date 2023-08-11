@@ -16,3 +16,4 @@ docker build . -t kuro08/zero:0.3.0 && docker push kuro08/zero:0.3.0
 cd ..
 
 tar -czvf zeroservice.tgz zeroservice
+tar -czvf bird-demo/selobe-wind.tgz bird-demo/selobe-wind

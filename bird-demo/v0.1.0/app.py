@@ -73,13 +73,16 @@ if __name__ == "__main__":
     i = 0
     log(
         level=logging.INFO,
-        msg=f"Sending logs to {sp.instance} each {frequency} seconds on http:zero-service{stage}",
+        msg=f"Sending logs to {sp.instance} each {frequency} seconds on http:selobe-wind{stage}",
     )
+
     while True:
         error_msg = updateDate(error_msg)
-        resp = sp.send(error_msg, f"http:zero-service{stage}")
+        resp = sp.send(error_msg, f"http:selobe-wind{stage}")
         log(level=logging.INFO, msg=error_msg)
-        log(level=logging.INFO, msg=f"Error number: {i} sent on http:zero-service{stage}")
+        log(
+            level=logging.INFO, msg=f"Error number: {i} sent on http:selobe-wind{stage}"
+        )
         log(level=logging.INFO, msg=f"Response: {resp.content}")
         i += 1
         time.sleep(frequency)
